@@ -183,6 +183,7 @@ teDynState eDynGetProtocolState(teDynProtocol proto);
 void vDynRequestState(teDynProtocol proto, teDynState state);
 void vMac_DynRadioAvailable(uint32 dt);
 teDynStatus eMac_DynActivityAdded(uint32 dt);
+void vDynStopAll();
 void vDynEnableCoex(void *coexReg, void *coexReqAcces, void *coexChangeAccess, void *relAccess, void *changeAccess);
 
 #ifdef __cplusplus

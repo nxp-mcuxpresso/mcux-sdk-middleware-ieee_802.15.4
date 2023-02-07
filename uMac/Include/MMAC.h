@@ -236,6 +236,12 @@ typedef enum
     E_MMAC_CCAMODE_ENERGY_OR_CARRIER = 0x03  /* Either energy or carrier */
 } teCcaMode;
 
+/* 
+ * Invalid rssi value, this should be greater than
+ * maximum returned value from radio
+ */
+#define MMAC_INVALID_RSSI (127)
+
 /****************************************************************************/
 /***        Exported Functions                                            ***/
 /****************************************************************************/
@@ -310,6 +316,7 @@ PUBLIC void __vMMAC_SetCutOffTimer(uint8 u8ProtoTag, uint32 u32CutOffTime, bool_
 PUBLIC void __vMMAC_SynchroniseBackoffClock(uint8 u8ProtoTag, bool_t bEnable);
 PUBLIC void __vMMAC_GetMacAddress(uint8 u8ProtoTag, tsExtAddr *psMacAddr);
 PUBLIC uint8 __u8MMAC_EnergyDetect(uint8 u8ProtoTag, uint32 u32DurationSymbols);
+PUBLIC int16 __i16MMAC_GetRSSI(uint8 u8ProtoTag);
 PUBLIC uint32 __u32MMAC_GetPhyState(uint8 u8ProtoTag);
 PUBLIC void __vMMAC_RxCtlUpdate(uint8 u8ProtoTag, uint32 u32NewValue);
 PUBLIC void __vMMAC_AbortRadio(uint8 u8ProtoTag);
@@ -329,6 +336,7 @@ PUBLIC void __vMMAC_SetPRBSS(uint8 u8ProtoTag, uint32 u32Seed);
 #define vMMAC_SynchroniseBackoffClock(bEnable) __vMMAC_SynchroniseBackoffClock((MAC_PROTO_TAG), (bEnable))
 #define vMMAC_GetMacAddress(psMacAddr) __vMMAC_GetMacAddress((MAC_PROTO_TAG), (psMacAddr))
 #define u8MMAC_EnergyDetect(u32DurationSymbols) __u8MMAC_EnergyDetect((MAC_PROTO_TAG), (u32DurationSymbols))
+#define i16MMAC_GetRSSI() __i16MMAC_GetRSSI((MAC_PROTO_TAG))
 #define u32MMAC_GetPhyState() __u32MMAC_GetPhyState((MAC_PROTO_TAG))
 #define vMMAC_RxCtlUpdate(u32NewValue) __vMMAC_RxCtlUpdate((MAC_PROTO_TAG), (u32NewValue))
 #define vMMAC_AbortRadio() __vMMAC_AbortRadio((MAC_PROTO_TAG))
@@ -347,6 +355,7 @@ PUBLIC void vMMAC_SetCutOffTimer(uint32 u32CutOffTime, bool_t bEnable);
 PUBLIC void vMMAC_SynchroniseBackoffClock(bool_t bEnable);
 PUBLIC void vMMAC_GetMacAddress(tsExtAddr *psMacAddr);
 PUBLIC uint8 u8MMAC_EnergyDetect(uint32 u32DurationSymbols);
+PUBLIC int16 i16MMAC_GetRSSI(void);
 PUBLIC uint32 u32MMAC_GetPhyState(void);
 PUBLIC void vMMAC_RxCtlUpdate(uint32 u32NewValue);
 PUBLIC void vMMAC_AbortRadio(void);
