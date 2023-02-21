@@ -23,46 +23,29 @@ extern "C" {
 /***        Macro/Type Definitions                                        ***/
 /****************************************************************************/
 
-#if (defined JENNIC_CHIP_FAMILY_JN516x) || (defined JENNIC_CHIP_FAMILY_JN517x)
-/* Buffers do not need to be in a specific section */
-#define MAC_BUFFER_SECTION
-#else
 /* Place buffers in a specific section - memory preserved during sleep mode */
 #define MAC_BUFFER_SECTION __attribute__ ((section (".mac_buffer")))
-#endif
 
-#if !(defined JENNIC_CHIP_FAMILY_JN516x) && !(defined JENNIC_CHIP_FAMILY_JN517x)
 /* Address obtained from linker */
 extern uint32 __mac_buffer_base;
 
- #if (defined BUILD_JN518x_ES2)
-  #if (defined ROM_BUILD_FOR_ZB)
-   /* Offset into base of RAM bank 0 */
-   #define MAC_BUFFER_BASE    (0x04000000)
-  #else
-   /* Address obtained from linker: will be aligned on 128kB boundary */
-   #define MAC_BUFFER_BASE ((uint32)&__mac_buffer_base)
-  #endif
-  /* MAC buffer address at end of range: not valid */
-  #define MAC_BUFFER_INVALID (MAC_BUFFER_BASE + 0x1fffc)
- #else
-  /* Address obtained from linker: must be aligned on 32kB boundary */
-  #define MAC_BUFFER_BASE ((uint32)&__mac_buffer_base)
-  /* MAC buffer address at end of range: not valid. Value is set at run-time
-     in vMiniMac_Init */
-  #define MAC_BUFFER_INVALID (u32MacBufferInvalidAddr)
- #endif
+#if (defined BUILD_JN518x_ES2)
+    #if (defined ROM_BUILD_FOR_ZB)
+        /* Offset into base of RAM bank 0 */
+        #define MAC_BUFFER_BASE    (0x04000000)
+    #else
+        /* Address obtained from linker: will be aligned on 128kB boundary */
+        #define MAC_BUFFER_BASE ((uint32)&__mac_buffer_base)
+    #endif
+    /* MAC buffer address at end of range: not valid */
+    #define MAC_BUFFER_INVALID (MAC_BUFFER_BASE + 0x1fffc)
 #else
- /* No offset required for JN516x or JN517x: using 0 reduces code */
- #define MAC_BUFFER_BASE (0)
- /* MAC buffer address at end of range: not valid */
- #if (defined JENNIC_CHIP_FAMILY_JN516x)
-  #define MAC_BUFFER_INVALID (0x04007ffc)
- #else
-  #define MAC_BUFFER_INVALID (0x20007ffc)
- #endif
+    /* Address obtained from linker: must be aligned on 32kB boundary */
+    #define MAC_BUFFER_BASE ((uint32)&__mac_buffer_base)
+    /* MAC buffer address at end of range: not valid. Value is set at run-time
+       in vMiniMac_Init */
+    #define MAC_BUFFER_INVALID (u32MacBufferInvalidAddr)
 #endif
-
 
 typedef struct
 {
@@ -320,7 +303,6 @@ PUBLIC int16 __i16MMAC_GetRSSI(uint8 u8ProtoTag);
 PUBLIC uint32 __u32MMAC_GetPhyState(uint8 u8ProtoTag);
 PUBLIC void __vMMAC_RxCtlUpdate(uint8 u8ProtoTag, uint32 u32NewValue);
 PUBLIC void __vMMAC_AbortRadio(uint8 u8ProtoTag);
-PUBLIC void __vMMAC_SetHighPowerOptions(uint8 u8ProtoTag);
 PUBLIC void __vMMAC_PromiscuousMode(uint8 u8ProtoTag, bool_t bPromiscuous);
 PUBLIC void __vMMAC_WriteCcaThreshold(uint8 u8ProtoTag, uint8 u8CcaThreshold);
 PUBLIC uint8 __u8MMAC_ReadCcaThreshold(uint8 u8ProtoTag);
@@ -340,7 +322,6 @@ PUBLIC void __vMMAC_SetPRBSS(uint8 u8ProtoTag, uint32 u32Seed);
 #define u32MMAC_GetPhyState() __u32MMAC_GetPhyState((MAC_PROTO_TAG))
 #define vMMAC_RxCtlUpdate(u32NewValue) __vMMAC_RxCtlUpdate((MAC_PROTO_TAG), (u32NewValue))
 #define vMMAC_AbortRadio() __vMMAC_AbortRadio((MAC_PROTO_TAG))
-#define vMMAC_SetHighPowerOptions() __vMMAC_SetHighPowerOptions((MAC_PROTO_TAG))
 #define vMMAC_PromiscuousMode(bPromiscuous) __vMMAC_PromiscuousMode((MAC_PROTO_TAG), (bPromiscuous))
 #define vMMAC_WriteCcaThreshold(u8CcaThreshold) __vMMAC_WriteCcaThreshold((MAC_PROTO_TAG), (u8CcaThreshold))
 #define u8MMAC_ReadCcaThreshold() __u8MMAC_ReadCcaThreshold((MAC_PROTO_TAG))
@@ -359,7 +340,6 @@ PUBLIC int16 i16MMAC_GetRSSI(void);
 PUBLIC uint32 u32MMAC_GetPhyState(void);
 PUBLIC void vMMAC_RxCtlUpdate(uint32 u32NewValue);
 PUBLIC void vMMAC_AbortRadio(void);
-PUBLIC void vMMAC_SetHighPowerOptions(void);
 PUBLIC void vMMAC_PromiscuousMode(bool_t bPromiscuous);
 PUBLIC void vMMAC_WriteCcaThreshold(uint8 u8CcaThreshold);
 PUBLIC uint8 u8MMAC_ReadCcaThreshold(void);

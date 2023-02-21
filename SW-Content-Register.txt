@@ -1,8 +1,8 @@
 Release Name: MCUXpresso Software Development Kit (SDK) IEEE-802.15.4 middleware
-Release Version: 2.6.9
+Release Version: 2.6.10
 Package License: LA_OPT_NXP_Software_License.htm - Additional Distribution License, Section 2.3 applies
 
-ieee_802_15_4              version: 5.3.7                                    
+ieee_802_15_4              version: 5.3.9                                  
                            Location: /       
                            Description: NXP Wireless IEEE 802.15.4           
                            License: Proprietary, See EULA                    

@@ -60,13 +60,6 @@ extern "C" {
 #define pvAppApiGetMacHandle(A)         NULL
 #define pvAppApiGetMacAddrLocation      pvAppApiDefGetMacAddrLocation
 
-#if (defined JENNIC_CHIP_FAMILY_JN516x) || (defined JENNIC_CHIP_FAMILY_JN517x)
-/* High Power Module Enable */
-#define APP_API_MODULE_STD   (0)
-#define APP_API_MODULE_HPM05 (1)
-#define APP_API_MODULE_HPM06 (2)
-#endif
-
 /****************************************************************************/
 /***        Type Definitions                                              ***/
 /****************************************************************************/
